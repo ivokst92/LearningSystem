@@ -6,5 +6,6 @@ namespace LearningSystem.Services.Admin
     public interface IAdminUserService
     {
         IEnumerable<AdminUserListingServiceModel> All();
+        
     }
 }
