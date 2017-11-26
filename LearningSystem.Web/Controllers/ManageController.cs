@@ -23,7 +23,6 @@ namespace LearningSystem.Web.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
 
@@ -32,13 +31,11 @@ namespace LearningSystem.Web.Controllers
         public ManageController(
           UserManager<User> userManager,
           SignInManager<User> signInManager,
-          IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
         }
@@ -58,6 +55,8 @@ namespace LearningSystem.Web.Controllers
             var model = new IndexViewModel
             {
                 Username = user.UserName,
+                Name = user.Name,
+                Birthdate = user.Birthdate,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
@@ -100,6 +99,22 @@ namespace LearningSystem.Web.Controllers
                 {
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
+            }
+            var nameIsChanged = model.Name != user.Name;
+            var birthdateIsChanged = model.Birthdate != user.Birthdate;
+            if (nameIsChanged)
+            {
+                user.Name = model.Name;
+            }
+
+            if (birthdateIsChanged)
+            {
+                user.Birthdate = model.Birthdate;
+            }
+
+            if (nameIsChanged || birthdateIsChanged)
+            {
+                var result = await this._userManager.UpdateAsync(user);
             }
 
             StatusMessage = "Your profile has been updated";

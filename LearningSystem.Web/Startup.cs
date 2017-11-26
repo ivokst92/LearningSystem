@@ -69,6 +69,11 @@ namespace LearningSystem.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                  name: "course",
+                  template: "users/{username}",
+                  defaults: new { controller = "Users", action = "Profile" });
+
+                routes.MapRoute(
                   name: "blog",
                   template: "blog/articles/details/{id}/{title}",
                   defaults: new { area = "Blog", controller = "Articles", action = "Details" });

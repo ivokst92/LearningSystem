@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LearningSystem.Common.Mapping;
+using LearningSystem.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace LearningSystem.Web.Infrastructure.Mapping
     {
         public AutoMapperProfile()
         {
+            var loadAssembly = typeof(IService);
             var allTypes = AppDomain
                 .CurrentDomain
                 .GetAssemblies()

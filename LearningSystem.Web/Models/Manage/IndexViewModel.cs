@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LearningSystem.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,15 @@ namespace LearningSystem.Web.Models.ManageViewModels
     public class IndexViewModel
     {
         public string Username { get; set; }
+
+        [Required]
+        [MaxLength(DataConstants.UserNameMaxLength)]
+        [MinLength(DataConstants.UserNameMinLength)]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Birthdate { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 

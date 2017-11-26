@@ -26,8 +26,8 @@
     margin: 15px;
 }
 
-.home-jumbotron{
-    margin-top:30px;
+.home-jumbotron {
+    margin-top: 30px;
 }
 
 /* Hide/rearrange for smaller screens */
@@ -38,15 +38,18 @@
     }
 }
 
+.message {
+    margin-top: 20px;
+}
 
 .article-list li {
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .pagination li.disabled a {
     pointer-events: none;
 }
 
-.home-page.img-responsive{
-    height:200px !important;
+.home-page.img-responsive {
+    height: 200px !important;
 }
