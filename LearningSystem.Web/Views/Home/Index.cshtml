@@ -7,17 +7,18 @@
     <h1>Welcome to our learning system!</h1>
 </div>
 
-<div class="row">
-    @foreach(var course in Model)
+<div class="row home-page">
+    @foreach (var course in Model)
     {
         <div class="col-md-4">
-            <div class="panel panel-default" >
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>@course.Name</h3>
+                    <h3 class="panel-title text-center">@course.Name</h3>
                 </div>
                 <div class="panel-body">
-                    @*//TODO IMAGE*@
-                  <p class="text-center">@course.StartDate.ToShortDateString() - @course.EndDate.ToShortDateString()</p> 
+                    <img src="http://thecatapi.com/api/images/get?format=src&type=gif&guid=@(Guid.NewGuid())" class="img-responsive" />
+                    <br />
+                    <p class="text-center">@course.StartDate.ToShortDateString() - @course.EndDate.ToShortDateString()</p>
                 </div>
             </div>
         </div>

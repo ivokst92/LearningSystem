@@ -15,7 +15,7 @@ namespace LearningSystem.Web.Areas.Blog.Models.Articles
         public string Title { get; set; }
 
         [Required]
-        [MaxLength()]
+        [MaxLength(4000)]
         public string Content { get; set; }
         
     }

@@ -50,7 +50,7 @@
                             adminUser = new User
                             {
                                 Email = adminEmail,
-                                UserName = adminEmail,
+                                UserName = WebConstants.AdministratorRole,
                                 Name = WebConstants.AdministratorRole,
                                 Birthdate = DateTime.UtcNow
                             };

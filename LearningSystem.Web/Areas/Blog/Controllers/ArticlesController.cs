@@ -6,6 +6,7 @@ using LearningSystem.Web.Infrastructure.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LearningSystem.Web.Areas.Blog.Models.Articles;
+using LearningSystem.Web.Infrastructure.Extensions;
 using Ganss.XSS;
 using LearningSystem.Services.Html;
 using LearningSystem.Services.Interfaces;
@@ -33,7 +34,12 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
 
         [AllowAnonymous]
         public IActionResult Index(int page = 1)
-            => View(this.blogArcticleService.All(page));
+            => View(new ArticleListingViewModel
+            {
+                Articles= this.blogArcticleService.All(page),
+                TotalArticles = this.blogArcticleService.Total(),
+                CurrentPage=page,
+            });
 
         public IActionResult Create()
         {
@@ -51,9 +57,7 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Details(int Ìd = 1)
-        {
-            return null;
-        }
+        public IActionResult Details(int Id)
+        => this.ViewOrNotFound(this.blogArcticleService.GetById(Id));
     }
 }

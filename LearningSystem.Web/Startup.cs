@@ -39,8 +39,8 @@ namespace LearningSystem.Web
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();
-
             services.AddDomainServices();
+            services.AddRouting(routing => routing.LowercaseUrls = true);
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
