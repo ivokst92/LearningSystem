@@ -22,27 +22,36 @@ else
                 <th>
                     Grade
                 </th>
-                <th>
+                @if (Model.Course.EndDate < DateTime.UtcNow)
+                {
+                    <th>
+                        Exam Submission
+                    </th>
+                    <th>
 
-                </th>
+                    </th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var student in Model.Students)
             {
                 <tr>
-                    <th>
+                    <td>
                         @student.Name
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @student.Email
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @(student.Grade == null ? "No Grade" : student.Grade.ToString())
-                    </th>
+                    </td>
                     @if (Model.Course.EndDate < DateTime.UtcNow)
                     {
-                        <th>
+                        <td>
+                            <a asp-action="DownloadExam" asp-route-id="@Model.Course.Id" asp-route-studentId="@student.Id">Download</a>
+                        </td>
+                        <td>
                             <form asp-action="GradeStudent" asp-route-id="@Model.Course.Id" method="post">
                                 <input type="hidden" name="studentId" value="@student.Id" />
 
@@ -50,7 +59,7 @@ else
                                 <input type="submit" class="btn btn-primary" value="Add Grade" />
 
                             </form>
-                        </th>
+                        </td>
                     }
                 </tr>
             }

@@ -7,13 +7,14 @@ using System.Text;
 using LearningSystem.Services.Models.Courses;
 using AutoMapper.QueryableExtensions;
 using LearningSystem.Data.Models;
+using System.Threading.Tasks;
 
 namespace LearningSystem.Services.Implementations
 {
     public class CourseService : ICourseService
     {
         private readonly LearningSystemDbContext db;
-         
+
         public CourseService(LearningSystemDbContext db)
         {
             this.db = db;
@@ -32,6 +33,31 @@ namespace LearningSystem.Services.Implementations
                  .ProjectTo<TModel>()
                  .FirstOrDefault();
 
+        public IEnumerable<CourseListingServiceModel> Find(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+            return this.db.Courses
+            .OrderByDescending(x => x.Id)
+             .Where(x => x.Name.ToLower().Contains(searchText.ToLower()))
+             .ProjectTo<CourseListingServiceModel>()
+            .ToList();
+        }
+
+        public async Task<bool> SaveExamSubmissionAsync(int courseId, string studentId, byte[] examSubmission)
+        {
+            var studentInCourse = await this.db
+                .FindAsync<StudentCourse>(courseId, studentId);
+
+            if (studentInCourse == null)
+            {
+                return false;
+            }
+
+            studentInCourse.ExamSubmission = examSubmission;
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         public bool SignOutStudent(int courseId, string studentId)
         {
             var courseInfo = GetCourseInfo(courseId, studentId);
@@ -44,7 +70,7 @@ namespace LearningSystem.Services.Implementations
             }
 
             var studentInCourse = this.db
-                .Find<StudentCourse>(courseId,studentId);
+                .Find<StudentCourse>(courseId, studentId);
 
             this.db.Remove(studentInCourse);
             this.db.SaveChanges();

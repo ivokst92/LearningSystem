@@ -1,0 +1,9 @@
+﻿@model IEnumerable<BlogArticleListingServiceModel>
+@{
+    string blog = Model.Count() == 1 ? "blog" : "blogs";
+    ViewData["Title"] = $"{Model.Count()} {blog} found.";
+}
+
+<h2>@ViewData["Title"]</h2>
+<br />
+@Html.Partial("_ArticlesPartial", Model)

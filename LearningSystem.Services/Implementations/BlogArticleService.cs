@@ -26,6 +26,17 @@ namespace LearningSystem.Services.Implementations
             .ProjectTo<BlogArticleListingServiceModel>()
             .ToList();
 
+        public IEnumerable<BlogArticleListingServiceModel> ByTitleOrContent(string searchText)
+        {
+            searchText = searchText == null ? string.Empty : searchText.ToLower();
+            return this.db.Articles
+            .OrderByDescending(x => x.Id)
+             .Where(x => x.Title.ToLower().Contains(searchText) ||
+             x.Content.ToLower().Contains(searchText))
+             .ProjectTo<BlogArticleListingServiceModel>()
+            .ToList();
+        }
+
         public void Create(string title, string content, string authorId)
         {
             var article = new Article()

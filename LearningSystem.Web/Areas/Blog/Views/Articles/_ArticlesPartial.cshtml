@@ -1,0 +1,15 @@
+﻿@model  IEnumerable<BlogArticleListingServiceModel>
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group article-list">
+            @foreach (var article in Model)
+            {
+                <li class="list-group-item">
+                    <a asp-action="Details" asp-route-id="@article.Id">@article.Title</a>
+                    <br />
+                    <small>published by @article.Author on @article.PublishDate.ToShortDateString()</small>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

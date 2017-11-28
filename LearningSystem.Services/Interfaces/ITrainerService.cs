@@ -4,6 +4,7 @@ using LearningSystem.Services.Models.UserCourses;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LearningSystem.Services.Interfaces
 {
@@ -16,5 +17,7 @@ namespace LearningSystem.Services.Interfaces
         IEnumerable<StudentInCourseServiceModel> StudentsInCourse(int courseId);
 
         bool AddGrade(int courseId, string studentId, Grade grade);
+
+        Task<byte[]> GetExamSubmission(int id, string studentId);
     }
 }

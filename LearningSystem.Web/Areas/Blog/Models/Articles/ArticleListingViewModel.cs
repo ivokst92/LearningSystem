@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LearningSystem.Web.Areas.Blog.Models.Articles
 {
-    public class ArticleListingViewModel
-    {
-        public IEnumerable<BlogArticleListingServiceModel> Articles { get; set; }
+    public class ArticleListingViewModel : ArticleListingBaseViewModel
+    {   
+        public string SearchText { get; set; }
 
         public int CurrentPage { get; set; }
 

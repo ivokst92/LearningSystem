@@ -50,6 +50,6 @@
     pointer-events: none;
 }
 
-.home-page.img-responsive {
+.course-listings .img-responsive {
     height: 200px !important;
 }

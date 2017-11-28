@@ -79,5 +79,28 @@ namespace LearningSystem.Web.Controllers
             TempData.AddSuccessMessage("Grade added successfuly");
             return RedirectToAction(nameof(Students), new { id });
         }
+
+        public async Task<IActionResult> DownloadExam(int id,string studentId)
+        {
+            if (string.IsNullOrEmpty(studentId))
+            {
+                return BadRequest();
+            }
+            var userId = this.userManager.GetUserId(User);
+
+            if (!this.trainerService.IsTrainer(id, userId))
+            {
+                return BadRequest();
+            }
+
+            var examContents = await this.trainerService.GetExamSubmission(id, studentId);
+
+            if (examContents == null)
+            {
+                return BadRequest();
+            }
+
+            return File(examContents,"application/zip","Exam.zip");
+        }
     }
 }

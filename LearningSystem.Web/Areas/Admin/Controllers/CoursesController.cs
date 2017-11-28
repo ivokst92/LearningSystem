@@ -44,7 +44,11 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
                 return View(model);
             }
 
-            this.adminCourseService.Create(model.Name, model.Description, model.StartDate, model.EndDate, model.TrainerId);
+            this.adminCourseService.Create(model.Name,
+                model.Description,
+                model.StartDate,
+                model.EndDate.AddDays(1),
+                model.TrainerId);
 
             TempData.AddSuccessMessage("Course added successfuly.");
 

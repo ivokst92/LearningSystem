@@ -8,6 +8,7 @@ using System.Linq;
 using AutoMapper.QueryableExtensions;
 using LearningSystem.Services.Models.UserCourses;
 using LearningSystem.Data.Models;
+using System.Threading.Tasks;
 
 namespace LearningSystem.Services.Implementations
 {
@@ -39,6 +40,19 @@ namespace LearningSystem.Services.Implementations
             .Where(x => x.TrainerId == trainerId)
             .ProjectTo<CourseListingServiceModel>()
             .ToList();
+
+        public async Task<byte[]> GetExamSubmission(int courseId, string studentId)
+        {
+            var studentInCourse = await this.Db
+                .FindAsync<StudentCourse>(courseId, studentId);
+
+            if (studentInCourse == null)
+            {
+                return null;
+            }
+
+            return studentInCourse.ExamSubmission;
+        }
 
         public bool IsTrainer(int courseId, string trainerId)
         => this.Db

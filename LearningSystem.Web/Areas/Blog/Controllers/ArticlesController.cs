@@ -36,9 +36,9 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
         public IActionResult Index(int page = 1)
             => View(new ArticleListingViewModel
             {
-                Articles= this.blogArcticleService.All(page),
+                Articles = this.blogArcticleService.All(page),
                 TotalArticles = this.blogArcticleService.Total(),
-                CurrentPage=page,
+                CurrentPage = page,
             });
 
         public IActionResult Create()
@@ -59,5 +59,12 @@ namespace LearningSystem.Web.Areas.Blog.Controllers
         [AllowAnonymous]
         public IActionResult Details(int Id)
         => this.ViewOrNotFound(this.blogArcticleService.GetById(Id));
+
+        [AllowAnonymous]
+        public IActionResult Search(string SearchText)
+        {
+            var model = this.blogArcticleService.ByTitleOrContent(SearchText);
+            return View(model);
+        }
     }
 }

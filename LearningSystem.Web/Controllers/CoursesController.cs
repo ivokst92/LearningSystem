@@ -10,6 +10,7 @@ using LearningSystem.Web.Models.Courses;
 using Microsoft.AspNetCore.Authorization;
 using LearningSystem.Web.Infrastructure.Extensions;
 using LearningSystem.Services.Models.Courses;
+using Microsoft.AspNetCore.Http;
 
 namespace LearningSystem.Web.Controllers
 {
@@ -46,6 +47,28 @@ namespace LearningSystem.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> SubmitExam(int id,IFormFile exam)
+        {
+            if(!exam.FileName.EndsWith(".zip")
+                || exam.Length > 2 * 1024 * 1024)
+            {
+                TempData.AddErrorMessage("Your file should be a '.zip' file with no more than 2 MB size.");
+                return RedirectToAction(nameof(Details),new { id });
+            }
+
+            var fileContents =await exam.ToByteArrayAsync();
+            var userId = this.userManager.GetUserId(User);
+            var success = await this.courseService.SaveExamSubmissionAsync(id, userId, fileContents);
+            if (!success)
+            {
+                return BadRequest();
+            }
+
+            TempData.AddSuccessMessage("Exam saved successfully!");
+            return RedirectToAction(nameof(Details), new { id });
+        }
 
         [Authorize]
         [HttpPost]
